@@ -46,10 +46,10 @@ Sigue estos pasos **en orden** dentro del proyecto:
 
 ```bash
 # 1️⃣ Instalar la versión de Flutter especificada (3.35.3)
-fvm install
+fvm install 3.35.3
 
 # 2️⃣ Seleccionar esta versión como la versión local del proyecto
-fvm use
+fvm use 3.35.3
 
 # 3️⃣ Descargar todas las dependencias
 fvm flutter pub get
