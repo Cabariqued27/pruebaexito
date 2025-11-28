@@ -8,13 +8,26 @@ class ProductProvider extends ChangeNotifier {
   List<ProductModel> products = [];
   bool isLoading = false;
 
+  int? lastCategoryId;
+
   Future<void> fetchProductsByCategory(int categoryId) async {
+    print('uu');
+    if (lastCategoryId == categoryId && products.isNotEmpty) return;
+
+    lastCategoryId = categoryId;
     isLoading = true;
+    products = [];
     notifyListeners();
 
     products = await _api.getProductsByCategory(categoryId);
 
     isLoading = false;
+    notifyListeners();
+  }
+
+  void clearProducts() {
+    products = [];
+    lastCategoryId = null;
     notifyListeners();
   }
 }

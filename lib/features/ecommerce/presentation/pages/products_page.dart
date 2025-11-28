@@ -1,25 +1,45 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:pruebaexito/features/ecommerce/presentation/provider/products_provider.dart';
 import 'package:pruebaexito/features/ecommerce/data/models/product_model.dart';
 
-class ProductsPage extends StatelessWidget {
+class ProductsPage extends StatefulWidget {
   final int categoryId;
 
   const ProductsPage({super.key, required this.categoryId});
 
   @override
-  Widget build(BuildContext context) {
-    final provider = Provider.of<ProductProvider>(context);
+  State<ProductsPage> createState() => _ProductsPageState();
+}
 
-    Future.microtask(() {
-      if (!provider.isLoading && provider.products.isEmpty) {
-        provider.fetchProductsByCategory(categoryId);
+class _ProductsPageState extends State<ProductsPage> {
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        context.read<ProductProvider>().fetchProductsByCategory(widget.categoryId);
       }
     });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final provider = context.watch<ProductProvider>();
 
     return Scaffold(
-      appBar: AppBar(title: const Text("Productos")),
+      appBar: AppBar(
+        title: const Text("Productos"),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            context.read<ProductProvider>().clearProducts();
+            context.pop();
+          },
+        ),
+      ),
       body: LayoutBuilder(
         builder: (context, constraints) {
           if (provider.isLoading) {

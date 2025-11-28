@@ -49,7 +49,7 @@ class CategoriesPage extends StatelessWidget {
         final cat = provider.categories[i];
 
         return ListTile(
-          onTap: () => context.go('/products/${cat.id}'),
+          onTap: () => context.push('/products/${cat.id}'),
 
           leading: SizedBox(
             width: 50,
@@ -88,7 +88,7 @@ class CategoriesPage extends StatelessWidget {
         final cat = provider.categories[i];
 
         return InkWell(
-          onTap: () => context.go('/products/${cat.id}'),
+          onTap: () => context.push('/products/${cat.id}'),
 
           child: Card(
             elevation: 3,
