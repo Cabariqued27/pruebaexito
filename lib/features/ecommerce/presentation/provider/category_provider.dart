@@ -11,7 +11,6 @@ class CategoriesProvider with ChangeNotifier {
   String errorMessage = "";
 
   Future<void> fetchCategories() async {
-    print('siuu');
     isLoading = true;
     hasError = false;
     notifyListeners();

@@ -5,6 +5,7 @@ import 'package:pruebaexito/features/ecommerce/presentation/provider/products_pr
 import 'package:pruebaexito/features/ecommerce/presentation/provider/category_provider.dart';
 import 'package:pruebaexito/features/ecommerce/presentation/provider/cart_provider.dart';
 import 'package:pruebaexito/features/ecommerce/data/models/product_model.dart';
+import 'package:pruebaexito/utils/device_utils.dart';
 
 class ProductsPage extends StatefulWidget {
   final int? categoryId;
@@ -173,30 +174,36 @@ class _ProductsPageState extends State<ProductsPage> {
                   Expanded(
                     flex: 2,
                     child: Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            p.title,
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                            textAlign: TextAlign.start,
-                            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
-                          ),
-                          const SizedBox(height: 4),
-                          Text(
-                            "\$${p.price.toStringAsFixed(2)}",
-                            textAlign: TextAlign.start,
-                            style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.green,
-                            ),
-                          ),
-                          const Spacer(),
-                          _buildCartButton(p.id),
-                        ],
+                      padding: const EdgeInsets.all(10.0),
+                      child: LayoutBuilder(
+                        builder: (context, innerConstraints) {
+                          final isMobile = PlatformHelper.isMobile(context);
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                p.title,
+                                maxLines: isMobile ? 1 : 2,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600),
+                              ),
+
+                              const SizedBox(height: 4),
+
+                              Text(
+                                "\$${p.price.toStringAsFixed(2)}",
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.green,
+                                ),
+                              ),
+                              const Spacer(),
+                              _buildCartButton(p.id),
+                            ],
+                          );
+                        },
                       ),
                     ),
                   ),
@@ -242,7 +249,9 @@ class _ProductsPageState extends State<ProductsPage> {
             children: [
               IconButton(
                 onPressed: () => cart.removeProduct(productId),
-                icon: Icon(Icons.delete_outline, color: buttonColor),
+                icon: (cart.expressEnabled)
+                    ? Icon(Icons.delete_outline, color: buttonColor)
+                    : Icon(Icons.remove, color: buttonColor),
                 padding: EdgeInsets.zero,
                 constraints: const BoxConstraints(),
               ),

@@ -12,8 +12,6 @@ class ProductsProvider extends ChangeNotifier {
   int? lastCategoryId;
 
   Future<void> fetchProductsByCategory(int? categoryId) async {
-    print('rr');
-
     if (categoryId == null || categoryId <= 0) {
       products = [];
       hasError = true;
