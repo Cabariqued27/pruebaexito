@@ -31,7 +31,7 @@ Aplicación desarrollada con **Flutter**. Este proyecto sigue una arquitectura m
 - `provider`: Gestor de estado simple y potente.  
 - `go_router`: Biblioteca de enrutamiento y navegación.  
 - `http`: Para la comunicación con APIs REST.  
-- `flutter_lints`: Conjunto de reglas para mantener un código limpio y de alta calidad.  
+- `shared_prefrences`: Guardar carrito en SharedPreferences.  
 
 ---
 
