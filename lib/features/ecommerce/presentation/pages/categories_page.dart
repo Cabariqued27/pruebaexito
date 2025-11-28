@@ -16,7 +16,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      final provider = Provider.of<CategoryProvider>(context, listen: false);
+      final provider = Provider.of<CategoriesProvider>(context, listen: false);
       if (!provider.isLoading && provider.categories.isEmpty) {
         provider.fetchCategories();
       }
@@ -25,7 +25,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<CategoryProvider>(context);
+    final provider = Provider.of<CategoriesProvider>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -139,7 +139,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
     );
   }
 
-  Widget _buildGrid(BuildContext context, CategoryProvider provider, {required int crossAxis}) {
+  Widget _buildGrid(BuildContext context, CategoriesProvider provider, {required int crossAxis}) {
     if (provider.isLoading) {
       return const Center(child: CircularProgressIndicator());
     }
@@ -190,27 +190,12 @@ class _CategoriesPageState extends State<CategoriesPage> {
                   flex: 1,
                   child: Padding(
                     padding: const EdgeInsets.all(12),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          cat.name,
-                          style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-                          textAlign: TextAlign.start,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          cat.slug,
-                          style: const TextStyle(fontSize: 11, color: Colors.grey),
-                          textAlign: TextAlign.start,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        const Spacer(),
-                      ],
+                    child: Text(
+                      cat.name,
+                      style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.center,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
                 ),

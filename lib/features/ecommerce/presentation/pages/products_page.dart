@@ -19,12 +19,12 @@ class _ProductsPageState extends State<ProductsPage> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<ProductProvider>().fetchProductsByCategory(widget.categoryId);
+      context.read<ProductsProvider>().fetchProductsByCategory(widget.categoryId);
     });
   }
 
   String _getCategoryName() {
-    final categoryProvider = context.watch<CategoryProvider>();
+    final categoryProvider = context.watch<CategoriesProvider>();
     final category = categoryProvider.categories.firstWhere(
       (cat) => cat.id == widget.categoryId,
       orElse: () => categoryProvider.categories.first,
@@ -40,7 +40,7 @@ class _ProductsPageState extends State<ProductsPage> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            context.read<ProductProvider>().clearProducts();
+            context.read<ProductsProvider>().clearProducts();
             context.pop();
           },
         ),
@@ -86,7 +86,7 @@ class _ProductsPageState extends State<ProductsPage> {
           ),
         ],
       ),
-      body: Consumer<ProductProvider>(
+      body: Consumer<ProductsProvider>(
         builder: (context, provider, child) {
           if (provider.isLoading) {
             return const Center(child: CircularProgressIndicator());
@@ -110,7 +110,7 @@ class _ProductsPageState extends State<ProductsPage> {
     );
   }
 
-  Widget _buildGrid(ProductProvider provider) {
+  Widget _buildGrid(ProductsProvider provider) {
     return LayoutBuilder(
       builder: (context, constraints) {
         int crossAxisCount;

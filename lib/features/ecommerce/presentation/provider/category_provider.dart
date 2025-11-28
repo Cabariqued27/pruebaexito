@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pruebaexito/features/ecommerce/data/models/category_model.dart';
 import 'package:pruebaexito/features/ecommerce/data/datasources/category_datasource.dart';
 
-class CategoryProvider with ChangeNotifier {
+class CategoriesProvider with ChangeNotifier {
   final _api = CategoryDatasource();
 
   List<CategoryModel> categories = [];
