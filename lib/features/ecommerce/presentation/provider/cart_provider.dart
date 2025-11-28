@@ -8,7 +8,7 @@ class CartProvider with ChangeNotifier {
 
   bool get canUseExpress {
     final now = DateTime.now();
-    final start = DateTime(now.year, now.month, now.day, 23, 0);
+    final start = DateTime(now.year, now.month, now.day, 1, 0);
     final end = DateTime(now.year, now.month, now.day, 23, 60);
 
     return now.isAfter(start) && now.isBefore(end);

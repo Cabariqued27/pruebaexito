@@ -7,14 +7,28 @@ class CategoryProvider with ChangeNotifier {
 
   List<CategoryModel> categories = [];
   bool isLoading = false;
+  bool hasError = false;
+  String errorMessage = "";
 
   Future<void> fetchCategories() async {
-    try {
-      isLoading = true;
-      notifyListeners();
+    print('siuu');
+    isLoading = true;
+    hasError = false;
+    notifyListeners();
 
-      categories = await _api.getCategories();
+    try {
+      final data = await _api.getCategories();
+
+      if (data.isEmpty) {
+        hasError = true;
+        errorMessage = "No hay categorías disponibles";
+      } else {
+        categories = data;
+      }
     } catch (e) {
+      hasError = true;
+      errorMessage = "Error al cargar categorías";
+      categories = [];
       debugPrint("Error cargando categorías: $e");
     } finally {
       isLoading = false;

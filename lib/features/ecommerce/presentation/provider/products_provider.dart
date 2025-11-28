@@ -7,21 +7,44 @@ class ProductProvider extends ChangeNotifier {
 
   List<ProductModel> products = [];
   bool isLoading = false;
-
+  bool hasError = false;
+  String errorMessage = "";
   int? lastCategoryId;
 
-  Future<void> fetchProductsByCategory(int categoryId) async {
+  Future<void> fetchProductsByCategory(int? categoryId) async {
+    print('rr');
+
+    if (categoryId == null || categoryId <= 0) {
+      products = [];
+      hasError = true;
+      errorMessage = "Categoría inválida";
+      notifyListeners();
+      return;
+    }
+
     isLoading = true;
+    hasError = false;
     notifyListeners();
-    var data = await _api.getProductsByCategory(categoryId);
-    products = data;
-    isLoading = false;
-    notifyListeners();
+
+    try {
+      var data = await _api.getProductsByCategory(categoryId);
+      products = data;
+      lastCategoryId = categoryId;
+    } catch (e) {
+      hasError = true;
+      errorMessage = "Error al cargar productos";
+      products = [];
+    } finally {
+      isLoading = false;
+      notifyListeners();
+    }
   }
 
   void clearProducts() {
     products = [];
     lastCategoryId = null;
+    hasError = false;
+    errorMessage = "";
     notifyListeners();
   }
 }
