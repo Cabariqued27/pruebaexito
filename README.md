@@ -40,16 +40,20 @@ Aplicación desarrollada con **Flutter**. Este proyecto sigue una arquitectura m
 ### 1. Requisitos Previos
 Instala [FVM](https://fvm.app/) globalmente, ya que el proyecto está bloqueado a una versión específica de Flutter.
 
-### 2. Sincronizar Versión de Flutter
-Ejecuta FVM para descargar y configurar la versión de Flutter utilizada en este repositorio (3.35.3):
+### 2. Configurar Flutter, descargar dependencias y ejecutar la app
+
+Sigue estos pasos **en orden** dentro del proyecto:
 
 ```bash
+# 1️⃣ Instalar la versión de Flutter especificada (3.35.3)
 fvm install
+
+# 2️⃣ Seleccionar esta versión como la versión local del proyecto
 fvm use
 
-# Siempre usa 'fvm flutter' para asegurar la versión correcta
+# 3️⃣ Descargar todas las dependencias
 fvm flutter pub get
 
+# 4️⃣ Ejecutar la aplicación en un emulador o dispositivo conectado
 fvm flutter run
-
 
