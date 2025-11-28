@@ -9,7 +9,6 @@ class CategoryProvider with ChangeNotifier {
   bool isLoading = false;
 
   Future<void> fetchCategories() async {
-    print('cc');
     try {
       isLoading = true;
       notifyListeners();

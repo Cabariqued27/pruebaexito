@@ -17,18 +17,13 @@ class _ProductsPageState extends State<ProductsPage> {
   @override
   void initState() {
     super.initState();
-
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (mounted) {
-        context.read<ProductProvider>().fetchProductsByCategory(widget.categoryId);
-      }
+      context.read<ProductProvider>().fetchProductsByCategory(widget.categoryId);
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    final provider = context.watch<ProductProvider>();
-
     return Scaffold(
       appBar: AppBar(
         title: const Text("Productos"),
@@ -40,21 +35,28 @@ class _ProductsPageState extends State<ProductsPage> {
           },
         ),
       ),
-      body: LayoutBuilder(
-        builder: (context, constraints) {
+
+      // ⬇️ AQUÍ corregimos la parte superior para que sea responsive
+      body: Consumer<ProductProvider>(
+        builder: (context, provider, child) {
           if (provider.isLoading) {
             return const Center(child: CircularProgressIndicator());
           }
 
           if (provider.products.isEmpty) {
-            return const Center(child: Text('No hay productos'));
+            return const Center(child: Text("No hay productos"));
           }
 
-          if (constraints.maxWidth < 600) {
-            return _buildList(provider);
-          }
-
-          return _buildGrid(provider);
+          return LayoutBuilder(
+            builder: (context, constraints) {
+              // Responsive logic SIN tocar UI
+              if (constraints.maxWidth < 600) {
+                return _buildList(provider);
+              } else {
+                return _buildGrid(provider);
+              }
+            },
+          );
         },
       ),
     );
