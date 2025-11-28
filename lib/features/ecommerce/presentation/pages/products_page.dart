@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:pruebaexito/features/ecommerce/presentation/provider/products_provider.dart';
 import 'package:pruebaexito/features/ecommerce/presentation/provider/category_provider.dart';
 import 'package:pruebaexito/features/ecommerce/presentation/widgets/cart_icon_widget.dart';
-import 'package:pruebaexito/features/ecommerce/presentation/widgets/products_grid.dart';
+import 'package:pruebaexito/features/ecommerce/presentation/widgets/products_grid_widget.dart';
 
 class ProductsPage extends StatefulWidget {
   final int? categoryId;
@@ -34,9 +34,28 @@ class _ProductsPageState extends State<ProductsPage> {
 
   @override
   Widget build(BuildContext context) {
+    final productsProvider = context.watch<ProductsProvider>();
+    final categoryName = _getCategoryName();
+
     return Scaffold(
       appBar: AppBar(
-        title: Text(_getCategoryName()),
+        elevation: 0,
+        centerTitle: true,
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(categoryName, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+            if (!productsProvider.isLoading && productsProvider.products.isNotEmpty)
+              Text(
+                '${productsProvider.products.length} productos',
+                style: const TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.normal,
+                  color: Colors.white70,
+                ),
+              ),
+          ],
+        ),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
@@ -45,6 +64,7 @@ class _ProductsPageState extends State<ProductsPage> {
           },
         ),
         actions: const [Padding(padding: EdgeInsets.only(right: 16.0), child: CartIconWidget())],
+        backgroundColor: Theme.of(context).primaryColor,
       ),
       body: Consumer<ProductsProvider>(
         builder: (context, provider, child) {

@@ -27,11 +27,29 @@ class _CategoriesPageState extends State<CategoriesPage> {
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<CategoriesProvider>(context);
+    final categoryCount = provider.categories.length;
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Categorías"),
+        elevation: 0,
+        centerTitle: true,
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const Text("Categorías", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+            if (!provider.isLoading && categoryCount > 0)
+              Text(
+                '$categoryCount categorías',
+                style: const TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.normal,
+                  color: Colors.white70,
+                ),
+              ),
+          ],
+        ),
         actions: const [Padding(padding: EdgeInsets.only(right: 16.0), child: CartIconWidget())],
+        backgroundColor: Theme.of(context).primaryColor,
       ),
       body: Column(
         children: [
