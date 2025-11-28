@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:pruebaexito/features/ecommerce/data/models/category_model.dart';
 import 'package:pruebaexito/features/ecommerce/data/datasources/category_datasource.dart';
+import 'package:pruebaexito/features/ecommerce/data/models/category_model.dart';
 
+/// Provider encargado de manejar el estado de las categorías.
+
+/// Proporciona:
+/// - Lista de categorías.
+/// - Estado de carga (`isLoading`).
+/// - Manejo de errores (`hasError` y `errorMessage`).
 class CategoriesProvider with ChangeNotifier {
   final _api = CategoryDatasource();
 
@@ -10,10 +16,11 @@ class CategoriesProvider with ChangeNotifier {
   bool hasError = false;
   String errorMessage = "";
 
+  /// Maneja el estado de carga y los posibles errores.
   Future<void> fetchCategories() async {
     isLoading = true;
     hasError = false;
-    notifyListeners();
+    notifyListeners(); // Notifica que comenzó la carga
 
     try {
       final data = await _api.getCategories();
@@ -31,7 +38,7 @@ class CategoriesProvider with ChangeNotifier {
       debugPrint("Error cargando categorías: $e");
     } finally {
       isLoading = false;
-      notifyListeners();
+      notifyListeners(); // Notifica que terminó la carga
     }
   }
 }
