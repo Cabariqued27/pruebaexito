@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pruebaexito/features/ecommerce/presentation/provider/cart_provider.dart';
 
-class CartIcon extends StatelessWidget {
-  const CartIcon({super.key});
+class CartIconWidget extends StatelessWidget {
+  const CartIconWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
